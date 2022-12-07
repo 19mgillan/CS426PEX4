@@ -208,7 +208,44 @@ namespace CS426.analysis
             WriteLine("\tLABEL_EQUIVALENT:");
             WriteLine("\t\tldc.i4 1");
             WriteLine("\tLABEL_CONTINUE:");
-            WriteLine("\tpop");
+        }
+        public override void InAIfStatement(AIfStatement node)
+        {
+            if_statements += 1;
+        }
+
+        public override void OutAIfStatement(AIfStatement node)
+        {
+            if_statements -= 1;
+        }
+        public override void CaseAIfStatement(AIfStatement node)
+        {
+            // Visit if statement and increment number of if statements
+            InAIfStatement(node);
+
+            // Evaluate conditional
+            node.GetLogical().Apply(this);
+
+            // Generate Unique Labels
+            String label1 = "LABEL_IN_IF" + if_statements.ToString();
+            String label2 = "LABEL_OUT_IF" + if_statements.ToString();
+
+            //Write IL code
+            WriteLine("\tbrtrue " + label1);
+            WriteLine("\t" + label1 + ":");
+
+            //Apply code inside if statement
+            if(node.GetStatements() != null)
+            {
+                node.GetStatements().Apply(this);
+            }
+
+            WriteLine("\t\tbr " + label2);
+            WriteLine("\t" + label2 + ":");
+
+
+            OutAIfStatement(node);
+
         }
 
 
