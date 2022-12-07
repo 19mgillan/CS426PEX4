@@ -89,14 +89,14 @@ public interface Analysis : Switch
     void CaseTComma(TComma node);
     void CaseTKeymain(TKeymain node);
     void CaseTKeyfunc(TKeyfunc node);
+    void CaseTKeyif(TKeyif node);
+    void CaseTKeywhile(TKeywhile node);
     void CaseTId(TId node);
     void CaseTKeyfloat(TKeyfloat node);
     void CaseTKeyint(TKeyint node);
-    void CaseTKeyif(TKeyif node);
     void CaseTKeyelse(TKeyelse node);
     void CaseTKeyconst(TKeyconst node);
     void CaseTKeystr(TKeystr node);
-    void CaseTKeywhile(TKeywhile node);
     void CaseTComment(TComment node);
     void CaseTFloat(TFloat node);
     void CaseTInteger(TInteger node);
@@ -461,6 +461,14 @@ public class AnalysisAdapter : Analysis
     {
         DefaultCase(node);
     }
+    public virtual void CaseTKeyif(TKeyif node)
+    {
+        DefaultCase(node);
+    }
+    public virtual void CaseTKeywhile(TKeywhile node)
+    {
+        DefaultCase(node);
+    }
     public virtual void CaseTId(TId node)
     {
         DefaultCase(node);
@@ -473,10 +481,6 @@ public class AnalysisAdapter : Analysis
     {
         DefaultCase(node);
     }
-    public virtual void CaseTKeyif(TKeyif node)
-    {
-        DefaultCase(node);
-    }
     public virtual void CaseTKeyelse(TKeyelse node)
     {
         DefaultCase(node);
@@ -486,10 +490,6 @@ public class AnalysisAdapter : Analysis
         DefaultCase(node);
     }
     public virtual void CaseTKeystr(TKeystr node)
-    {
-        DefaultCase(node);
-    }
-    public virtual void CaseTKeywhile(TKeywhile node)
     {
         DefaultCase(node);
     }

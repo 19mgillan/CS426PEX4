@@ -11,6 +11,8 @@ namespace CS426.analysis
     internal class CodeGenerator : DepthFirstAdapter
     {
         StreamWriter _output;
+        int if_statements = 0;
+        int while_statements = 0;
         public CodeGenerator(String outputFilename)
         {
             _output = new StreamWriter(outputFilename);
@@ -174,6 +176,42 @@ namespace CS426.analysis
         {
             WriteLine("\tor");
         }
+
+        public override void OutACompareComparison(ACompareComparison node)
+        {
+            String type = node.GetEquality().ToString();
+            String operation = "";
+
+            if (type.Contains("==")){
+                operation = "beq";
+            }
+            else if (type.Contains("<="))
+            {
+                operation = "ble";
+            }
+            else if (type.Contains("<"))
+            {
+                operation = "blt";
+            }
+            else if (type.Contains(">="))
+            {
+                operation = "bge";
+            }
+            else if (type.Contains(">"))
+            {
+                operation = "bgt";
+            }
+            
+            WriteLine("\t" + operation + " LABEL_EQUIVALENT");
+            WriteLine("\t\tldc.i4 0");
+            WriteLine("\t\tbr LABEL_CONTINUE");
+            WriteLine("\tLABEL_EQUIVALENT:");
+            WriteLine("\t\tldc.i4 1");
+            WriteLine("\tLABEL_CONTINUE:");
+            WriteLine("\tpop");
+        }
+
+
 
     }
 }

@@ -9,19 +9,15 @@
 	.maxstack 128
 	.entrypoint
 
-	// Declaring Variable x 
-	.locals init(float32 x)
-
-	ldc.r4 5.1
-	stloc x
-
-	ldloc x
-	ldc.r4 1.0
-	add
-	stloc x
-
-	ldloc x
-	call void [mscorlib]System.Console::Write(float32)
+	ldc.i4 1
+	ldc.i4 1
+	bge LABEL_EQUIVALENT
+		ldc.i4 0
+		br LABEL_CONTINUE
+	LABEL_EQUIVALENT:
+		ldc.i4 1
+	LABEL_CONTINUE:
+	pop
 
 	ret
 }

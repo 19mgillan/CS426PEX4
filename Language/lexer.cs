@@ -582,14 +582,14 @@ public class Lexer
     private Token New16(String text, int line, int pos) { return new TComma(text, line, pos); }
     private Token New17(String text, int line, int pos) { return new TKeymain(text, line, pos); }
     private Token New18(String text, int line, int pos) { return new TKeyfunc(text, line, pos); }
-    private Token New19(String text, int line, int pos) { return new TId(text, line, pos); }
-    private Token New20(String text, int line, int pos) { return new TKeyfloat(text, line, pos); }
-    private Token New21(String text, int line, int pos) { return new TKeyint(text, line, pos); }
-    private Token New22(String text, int line, int pos) { return new TKeyif(text, line, pos); }
-    private Token New23(String text, int line, int pos) { return new TKeyelse(text, line, pos); }
-    private Token New24(String text, int line, int pos) { return new TKeyconst(text, line, pos); }
-    private Token New25(String text, int line, int pos) { return new TKeystr(text, line, pos); }
-    private Token New26(String text, int line, int pos) { return new TKeywhile(text, line, pos); }
+    private Token New19(String text, int line, int pos) { return new TKeyif(text, line, pos); }
+    private Token New20(String text, int line, int pos) { return new TKeywhile(text, line, pos); }
+    private Token New21(String text, int line, int pos) { return new TId(text, line, pos); }
+    private Token New22(String text, int line, int pos) { return new TKeyfloat(text, line, pos); }
+    private Token New23(String text, int line, int pos) { return new TKeyint(text, line, pos); }
+    private Token New24(String text, int line, int pos) { return new TKeyelse(text, line, pos); }
+    private Token New25(String text, int line, int pos) { return new TKeyconst(text, line, pos); }
+    private Token New26(String text, int line, int pos) { return new TKeystr(text, line, pos); }
     private Token New27(String text, int line, int pos) { return new TComment(text, line, pos); }
     private Token New28(String text, int line, int pos) { return new TFloat(text, line, pos); }
     private Token New29(String text, int line, int pos) { return new TInteger(text, line, pos); }
@@ -1137,13 +1137,13 @@ public class Lexer
     private static int[][] accept = {
       new int[] {
         -1, 31, 31, 31, 31, -1, 11, 12, 8, 7, 16, 9, 10, 29, 29, 0, 
-        4, 6, 2, -1, -1, -1, 19, 19, 19, 19, 19, 19, 19, 19, -1, -1, 
+        4, 6, 2, -1, -1, -1, 21, 21, 21, 21, 21, 21, 21, 21, -1, -1, 
         30, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
-        27, 28, 29, -1, 3, 5, 1, -1, -1, 14, 19, 19, 19, 19, 19, 19, 
-        19, 19, 19, 19, 19, 19, 30, 27, 28, -1, -1, 28, 28, 13, 15, 19, 
-        19, 19, 19, 19, 19, 19, 19, 19, 28, 19, 19, 19, 18, 17, 19, 19, 
-        19, 19, 
+        27, 28, 29, -1, 3, 5, 1, -1, -1, 14, 21, 21, 21, 21, 21, 21, 
+        21, 19, 21, 21, 21, 21, 30, 27, 28, -1, -1, 28, 28, 13, 15, 21, 
+        21, 21, 21, 21, 21, 21, 21, 21, 28, 21, 21, 21, 18, 17, 21, 21, 
+        21, 20, 
       },
     };
 

@@ -484,6 +484,56 @@ public sealed class TKeyfunc : Token
     }
 }
 
+public sealed class TKeyif : Token
+{
+    public TKeyif(string text)
+    {
+        Text = text;
+    }
+
+    public TKeyif(string text, int line, int pos)
+    {
+        Text = text;
+        Line = line;
+        Pos = pos;
+    }
+
+    public override Object Clone()
+    {
+      return new TKeyif(Text, Line, Pos);
+    }
+
+    public override void Apply(Switch sw)
+    {
+        ((Analysis) sw).CaseTKeyif(this);
+    }
+}
+
+public sealed class TKeywhile : Token
+{
+    public TKeywhile(string text)
+    {
+        Text = text;
+    }
+
+    public TKeywhile(string text, int line, int pos)
+    {
+        Text = text;
+        Line = line;
+        Pos = pos;
+    }
+
+    public override Object Clone()
+    {
+      return new TKeywhile(Text, Line, Pos);
+    }
+
+    public override void Apply(Switch sw)
+    {
+        ((Analysis) sw).CaseTKeywhile(this);
+    }
+}
+
 public sealed class TId : Token
 {
     public TId(string text)
@@ -559,31 +609,6 @@ public sealed class TKeyint : Token
     }
 }
 
-public sealed class TKeyif : Token
-{
-    public TKeyif(string text)
-    {
-        Text = text;
-    }
-
-    public TKeyif(string text, int line, int pos)
-    {
-        Text = text;
-        Line = line;
-        Pos = pos;
-    }
-
-    public override Object Clone()
-    {
-      return new TKeyif(Text, Line, Pos);
-    }
-
-    public override void Apply(Switch sw)
-    {
-        ((Analysis) sw).CaseTKeyif(this);
-    }
-}
-
 public sealed class TKeyelse : Token
 {
     public TKeyelse(string text)
@@ -656,31 +681,6 @@ public sealed class TKeystr : Token
     public override void Apply(Switch sw)
     {
         ((Analysis) sw).CaseTKeystr(this);
-    }
-}
-
-public sealed class TKeywhile : Token
-{
-    public TKeywhile(string text)
-    {
-        Text = text;
-    }
-
-    public TKeywhile(string text, int line, int pos)
-    {
-        Text = text;
-        Line = line;
-        Pos = pos;
-    }
-
-    public override Object Clone()
-    {
-      return new TKeywhile(Text, Line, Pos);
-    }
-
-    public override void Apply(Switch sw)
-    {
-        ((Analysis) sw).CaseTKeywhile(this);
     }
 }
 

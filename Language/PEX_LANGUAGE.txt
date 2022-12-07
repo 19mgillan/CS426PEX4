@@ -34,6 +34,8 @@ Tokens
 
 	keymain = 'main';
 	keyfunc = 'func';
+	keyif = 'if';
+	keywhile = 'while';
 
 	// Identifiers
 	id = ['a'..'z'] '_'? (letter | (letter | whole) '_' | whole)*;
@@ -41,12 +43,12 @@ Tokens
 	// Key Words
 	keyfloat = 'float';
 	keyint = 'int';
-	keyif = 'if';
+	
 	keyelse = 'else';
 	keyconst = 'const';
 	keystr = 'str';
 	
-	keywhile = 'while';
+	
 	
 	
 	// Comments
@@ -107,6 +109,6 @@ Productions
 	logical = {and} logical andl logical2 | {pass} logical2 ;
 	logical2 = {or} logical2 orl logical3 | {pass} logical3 ; 
 	logical3 = {not} notl comparison | {pass} comparison ;
-	comparison = {compare} [left]:expression equality [right]:expression | {nocompare} expression ;
+	comparison = {compare} [left]:expression equality [right]:expression| {nocompare} expression ;
 	
 
