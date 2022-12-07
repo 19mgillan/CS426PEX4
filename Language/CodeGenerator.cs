@@ -240,11 +240,42 @@ namespace CS426.analysis
                 node.GetStatements().Apply(this);
             }
 
+            // finish up the guy
             WriteLine("\t\tbr " + label2);
             WriteLine("\t" + label2 + ":");
 
 
             OutAIfStatement(node);
+
+        }
+
+        public override void InAWhileStatement(AWhileStatement node)
+        {
+            while_statements += 1;
+        }
+
+        public override void OutAWhileStatement(AWhileStatement node)
+        {
+            while_statements -= 1;
+        }
+
+        public override void CaseAWhileStatement(AWhileStatement node)
+        {
+            InAWhileStatement(node);
+            String label1 = "LABEL_IN_WHILE" + while_statements.ToString();
+            String label2 = "LABEL_OUT_WHILE" + while_statements.ToString();
+
+            WriteLine("\t" + label1 + ":");
+            node.GetLogical().Apply(this);
+            WriteLine("\tbrzero " + label2);
+            if (node.GetStatements() != null)
+            {
+                node.GetStatements().Apply(this);
+            }
+            WriteLine("\tbr " + label1);
+            WriteLine("\t" + label2 + ":");
+
+            OutAWhileStatement(node);
 
         }
 
