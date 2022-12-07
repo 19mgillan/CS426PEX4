@@ -160,5 +160,20 @@ namespace CS426.analysis
             }
         }
 
+        public override void OutANotLogical3(ANotLogical3 node)
+        {
+            WriteLine("\tldc.i4 0\nceq");
+        }
+
+        public override void OutAAndLogical(AAndLogical node)
+        {
+            WriteLine("\tand");
+        }
+
+        public override void OutAOrLogical2(AOrLogical2 node)
+        {
+            WriteLine("\tor");
+        }
+
     }
 }
