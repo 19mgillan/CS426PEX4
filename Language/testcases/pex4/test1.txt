@@ -1,6 +1,6 @@
 ﻿main (
-	int x;
-	x = 5;
-	x = x + 1;
-	printInt(x);
+	float x;
+	x = 5.1;
+	x = x + 1.0;
+	printFloat(x);
 )

@@ -10,18 +10,18 @@
 	.entrypoint
 
 	// Declaring Variable x 
-	.locals init(int32 x)
+	.locals init(float32 x)
 
-	ldc.i4 5
+	ldc.r4 5.1
 	stloc x
 
 	ldloc x
-	ldc.i4 1
+	ldc.r4 1.0
 	add
 	stloc x
 
 	ldloc x
-	call void [mscorlib]System.Console::Write(int32)
+	call void [mscorlib]System.Console::Write(float32)
 
 	ret
 }

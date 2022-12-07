@@ -94,6 +94,11 @@ namespace CS426.analysis
             WriteLine("\tldstr " + node.GetString().Text);
         }
 
+        public override void OutAFltOperand(AFltOperand node)
+        {
+            WriteLine("\tldc.r4 " + node.GetFloat().Text);
+        }
+
         public override void OutAVariableOperand(AVariableOperand node)
         {
             WriteLine("\tldloc " + node.GetId().Text);
@@ -113,6 +118,16 @@ namespace CS426.analysis
         public override void OutAMultiplyExpression3(AMultiplyExpression3 node)
         {
             WriteLine("\tmul");
+        }
+
+        public override void OutASubtractExpression2(ASubtractExpression2 node)
+        {
+            WriteLine("\tsub");
+        }
+
+        public override void OutADivideExpression4(ADivideExpression4 node)
+        {
+            WriteLine("\tdiv");
         }
 
         public override void OutANegativeExpression6(ANegativeExpression6 node)
