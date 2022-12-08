@@ -49,6 +49,7 @@ public interface Analysis : Switch
     void CaseAFunctionStatement(AFunctionStatement node);
     void CaseASingleParameters(ASingleParameters node);
     void CaseAMultipleParameters(AMultipleParameters node);
+    void CaseAEmptyParameters(AEmptyParameters node);
     void CaseADefineFunction(ADefineFunction node);
     void CaseASingleFuncparams(ASingleFuncparams node);
     void CaseAMultipleFuncparams(AMultipleFuncparams node);
@@ -91,6 +92,7 @@ public interface Analysis : Switch
     void CaseTKeyfunc(TKeyfunc node);
     void CaseTKeyif(TKeyif node);
     void CaseTKeywhile(TKeywhile node);
+    void CaseTKeycall(TKeycall node);
     void CaseTId(TId node);
     void CaseTKeyfloat(TKeyfloat node);
     void CaseTKeyint(TKeyint node);
@@ -304,6 +306,10 @@ public class AnalysisAdapter : Analysis
     {
         DefaultCase(node);
     }
+    public virtual void CaseAEmptyParameters(AEmptyParameters node)
+    {
+        DefaultCase(node);
+    }
     public virtual void CaseADefineFunction(ADefineFunction node)
     {
         DefaultCase(node);
@@ -466,6 +472,10 @@ public class AnalysisAdapter : Analysis
         DefaultCase(node);
     }
     public virtual void CaseTKeywhile(TKeywhile node)
+    {
+        DefaultCase(node);
+    }
+    public virtual void CaseTKeycall(TKeycall node)
     {
         DefaultCase(node);
     }
@@ -1235,6 +1245,10 @@ public class DepthFirstAdapter : AnalysisAdapter
     public override void CaseAFunctionStatement(AFunctionStatement node)
     {
         InAFunctionStatement(node);
+        if(node.GetKeycall() != null)
+        {
+            node.GetKeycall().Apply(this);
+        }
         if(node.GetId() != null)
         {
             node.GetId().Apply(this);
@@ -1302,6 +1316,21 @@ public class DepthFirstAdapter : AnalysisAdapter
             node.GetParameters().Apply(this);
         }
         OutAMultipleParameters(node);
+    }
+    public virtual void InAEmptyParameters(AEmptyParameters node)
+    {
+        DefaultIn(node);
+    }
+
+    public virtual void OutAEmptyParameters(AEmptyParameters node)
+    {
+        DefaultOut(node);
+    }
+
+    public override void CaseAEmptyParameters(AEmptyParameters node)
+    {
+        InAEmptyParameters(node);
+        OutAEmptyParameters(node);
     }
     public virtual void InADefineFunction(ADefineFunction node)
     {
@@ -2544,6 +2573,10 @@ public class ReversedDepthFirstAdapter : AnalysisAdapter
         {
             node.GetId().Apply(this);
         }
+        if(node.GetKeycall() != null)
+        {
+            node.GetKeycall().Apply(this);
+        }
         OutAFunctionStatement(node);
     }
     public virtual void InASingleParameters(ASingleParameters node)
@@ -2591,6 +2624,21 @@ public class ReversedDepthFirstAdapter : AnalysisAdapter
             node.GetExpression().Apply(this);
         }
         OutAMultipleParameters(node);
+    }
+    public virtual void InAEmptyParameters(AEmptyParameters node)
+    {
+        DefaultIn(node);
+    }
+
+    public virtual void OutAEmptyParameters(AEmptyParameters node)
+    {
+        DefaultOut(node);
+    }
+
+    public override void CaseAEmptyParameters(AEmptyParameters node)
+    {
+        InAEmptyParameters(node);
+        OutAEmptyParameters(node);
     }
     public virtual void InADefineFunction(ADefineFunction node)
     {

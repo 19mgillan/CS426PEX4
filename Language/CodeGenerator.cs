@@ -13,6 +13,9 @@ namespace CS426.analysis
         StreamWriter _output;
         int if_statements = 0;
         int while_statements = 0;
+        int comparisons = 0;
+        int nestedif = 0;
+        int nestedwhile = 0;
         public CodeGenerator(String outputFilename)
         {
             _output = new StreamWriter(outputFilename);
@@ -202,21 +205,29 @@ namespace CS426.analysis
                 operation = "bgt";
             }
             
-            WriteLine("\t" + operation + " LABEL_EQUIVALENT");
+            WriteLine("\t" + operation + " LABEL_EQUIVALENT" + operation.ToUpper() + comparisons.ToString());
             WriteLine("\t\tldc.i4 0");
-            WriteLine("\t\tbr LABEL_CONTINUE");
-            WriteLine("\tLABEL_EQUIVALENT:");
+            WriteLine("\t\tbr LABEL_CONTINUE" + operation.ToUpper() + comparisons.ToString());
+            WriteLine("\tLABEL_EQUIVALENT" + operation.ToUpper() + comparisons.ToString() + ":");
             WriteLine("\t\tldc.i4 1");
-            WriteLine("\tLABEL_CONTINUE:");
+            WriteLine("\tLABEL_CONTINUE" + operation.ToUpper() + comparisons.ToString() + ":");
+
+            comparisons += 1;
         }
         public override void InAIfStatement(AIfStatement node)
         {
-            if_statements += 1;
+            if(nestedif == 0)
+            {
+                if_statements += 1;
+            }
+            nestedif += 1;
+
         }
 
         public override void OutAIfStatement(AIfStatement node)
         {
-            if_statements -= 1;
+            
+            nestedif -= 1;
         }
         public override void CaseAIfStatement(AIfStatement node)
         {
@@ -227,8 +238,8 @@ namespace CS426.analysis
             node.GetLogical().Apply(this);
 
             // Generate Unique Labels
-            String label1 = "LABEL_IN_IF" + if_statements.ToString();
-            String label2 = "LABEL_OUT_IF" + if_statements.ToString();
+            String label1 = "LABEL_IN" + nestedif.ToString() + "_IF" + if_statements.ToString();
+            String label2 = "LABEL_OUT" + nestedif.ToString() + "_IF" + if_statements.ToString();
 
             //Write IL code
             WriteLine("\tbrtrue " + label1);
@@ -251,7 +262,11 @@ namespace CS426.analysis
 
         public override void InAWhileStatement(AWhileStatement node)
         {
-            while_statements += 1;
+            if (nestedwhile == 0)
+            {
+                while_statements += 1;
+            }
+            nestedwhile += 1;
         }
 
         public override void OutAWhileStatement(AWhileStatement node)
@@ -262,8 +277,8 @@ namespace CS426.analysis
         public override void CaseAWhileStatement(AWhileStatement node)
         {
             InAWhileStatement(node);
-            String label1 = "LABEL_IN_WHILE" + while_statements.ToString();
-            String label2 = "LABEL_OUT_WHILE" + while_statements.ToString();
+            String label1 = "LABEL_IN_WHILE" + while_statements.ToString() + nestedwhile.ToString();
+            String label2 = "LABEL_OUT_WHILE" + while_statements.ToString() + nestedwhile.ToString();
 
             WriteLine("\t" + label1 + ":");
             node.GetLogical().Apply(this);
@@ -277,6 +292,17 @@ namespace CS426.analysis
 
             OutAWhileStatement(node);
 
+        }
+
+        public override void InADefineFunction(ADefineFunction node)
+        {
+            WriteLine(".method static void " + node.GetId().ToString() + "() cil managed");
+            WriteLine("{\n\t.maxstack 128");
+        }
+
+        public override void OutADefineFunction(ADefineFunction node)
+        {
+            WriteLine("\tret\n}");
         }
 
 

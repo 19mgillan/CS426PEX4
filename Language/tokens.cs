@@ -534,6 +534,31 @@ public sealed class TKeywhile : Token
     }
 }
 
+public sealed class TKeycall : Token
+{
+    public TKeycall(string text)
+    {
+        Text = text;
+    }
+
+    public TKeycall(string text, int line, int pos)
+    {
+        Text = text;
+        Line = line;
+        Pos = pos;
+    }
+
+    public override Object Clone()
+    {
+      return new TKeycall(Text, Line, Pos);
+    }
+
+    public override void Apply(Switch sw)
+    {
+        ((Analysis) sw).CaseTKeycall(this);
+    }
+}
+
 public sealed class TId : Token
 {
     public TId(string text)

@@ -1,5 +1,89 @@
-﻿main (
-	while(1)(
-		int y;
-		)
-	)
+﻿  // ------------------------------------------------------------
+  // Control Structures:  If Statements
+  // ------------------------------------------------------------ 
+  func test6()(
+    call printString("IfStatementTest\n");
+    string pass;
+    pass = "pass\n";
+    string fail;
+    fail = "fail\n";
+
+    if (1.0 + 1.0 < 3.0) (
+      call printString(pass);
+    )
+    if (5.0 * 3.0 > 1) (
+      call printString(pass);
+    )
+    
+    call test7();
+  )
+
+  // ------------------------------------------------------------
+  // Control Structures:  Nested If Statements
+  // ------------------------------------------------------------
+  func test7() (
+    call printString("NestedIfStatementTest\n");
+    
+    if (3 > 2) (
+      if (5 > 4) (
+        call printString("NestedIfStatementPass\n");
+      )
+    )
+  )
+
+  // ------------------------------------------------------------
+  // Control Structures:  While Statements
+  // ------------------------------------------------------------ 
+  func test8() (
+    call printString("WhileLoopTest");
+    
+    int i;
+    i = 0;
+
+    while (10 > i) (
+      call printInt(i);
+      i = i + 1;
+    )
+
+    call printString("LoopComplete");
+    call printString("\n");
+
+    // Testing to See if Function Calls within a Function Work
+    call test9();
+  )
+  // ------------------------------------------------------------
+  // Control Structures:  Nested While Statements
+  // ------------------------------------------------------------ 
+  func test9() (
+    call printString("NestedWhileLoopTest");
+    
+    int x;
+    x = 0;
+    int y;
+    y = 0;
+
+    while (3 > y) (
+      while (3 > x) (
+        call printString("x:");
+        call printInt(x);
+        call printString("y:");
+        call printInt(y);
+        x = x + 1;
+      )
+      x = 0;
+      y = y + 1;
+    )
+
+    call printString("LoopComplete");
+    call printString("\n");
+  )
+
+
+
+  // ------------------------------------------------------------
+  // Main Program
+  // ------------------------------------------------------------
+  main(
+    call test6();
+    call test8();
+  )

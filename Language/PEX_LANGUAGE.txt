@@ -36,6 +36,7 @@ Tokens
 	keyfunc = 'func';
 	keyif = 'if';
 	keywhile = 'while';
+	keycall = 'call';
 
 	// Identifiers
 	id = ['a'..'z'] '_'? (letter | (letter | whole) '_' | whole)*;
@@ -92,8 +93,8 @@ Productions
 
 
 	// Function
-	function_statement = id openp parameters closep eol;
-	parameters = {single} expression | {multiple} expression comma parameters;
+	function_statement = keycall id openp parameters closep eol;
+	parameters = {single} expression | {multiple} expression comma parameters | {empty};
 	define_function = keyfunc id [paramopen]:openp funcparams [paramclose]:closep [funcopen]:openp statements [funcclose]:closep;
 	funcparams = {single} [type]:id [name]:id | {multiple} [type]:id [name]:id comma funcparams |  {empty} ;
 

@@ -3308,6 +3308,7 @@ public sealed class AStrOperand : POperand
 }
 public sealed class AFunctionStatement : PFunctionStatement
 {
+    private TKeycall _keycall_;
     private TId _id_;
     private TOpenp _openp_;
     private PParameters _parameters_;
@@ -3319,6 +3320,7 @@ public sealed class AFunctionStatement : PFunctionStatement
     }
 
     public AFunctionStatement (
+            TKeycall _keycall_,
             TId _id_,
             TOpenp _openp_,
             PParameters _parameters_,
@@ -3326,6 +3328,7 @@ public sealed class AFunctionStatement : PFunctionStatement
             TEol _eol_
     )
     {
+        SetKeycall (_keycall_);
         SetId (_id_);
         SetOpenp (_openp_);
         SetParameters (_parameters_);
@@ -3336,6 +3339,7 @@ public sealed class AFunctionStatement : PFunctionStatement
     public override Object Clone()
     {
         return new AFunctionStatement (
+            (TKeycall)CloneNode (_keycall_),
             (TId)CloneNode (_id_),
             (TOpenp)CloneNode (_openp_),
             (PParameters)CloneNode (_parameters_),
@@ -3349,6 +3353,30 @@ public sealed class AFunctionStatement : PFunctionStatement
         ((Analysis) sw).CaseAFunctionStatement(this);
     }
 
+    public TKeycall GetKeycall ()
+    {
+        return _keycall_;
+    }
+
+    public void SetKeycall (TKeycall node)
+    {
+        if(_keycall_ != null)
+        {
+            _keycall_.Parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.Parent() != null)
+            {
+                node.Parent().RemoveChild(node);
+            }
+
+            node.Parent(this);
+        }
+
+        _keycall_ = node;
+    }
     public TId GetId ()
     {
         return _id_;
@@ -3473,6 +3501,7 @@ public sealed class AFunctionStatement : PFunctionStatement
     public override string ToString()
     {
         return ""
+            + ToString (_keycall_)
             + ToString (_id_)
             + ToString (_openp_)
             + ToString (_parameters_)
@@ -3483,6 +3512,11 @@ public sealed class AFunctionStatement : PFunctionStatement
 
     internal override void RemoveChild(Node child)
     {
+        if ( _keycall_ == child )
+        {
+            _keycall_ = null;
+            return;
+        }
         if ( _id_ == child )
         {
             _id_ = null;
@@ -3512,6 +3546,11 @@ public sealed class AFunctionStatement : PFunctionStatement
 
     internal override void ReplaceChild(Node oldChild, Node newChild)
     {
+        if ( _keycall_ == oldChild )
+        {
+            SetKeycall ((TKeycall) newChild);
+            return;
+        }
         if ( _id_ == oldChild )
         {
             SetId ((TId) newChild);
@@ -3771,6 +3810,42 @@ public sealed class AMultipleParameters : PParameters
             SetParameters ((PParameters) newChild);
             return;
         }
+    }
+
+}
+public sealed class AEmptyParameters : PParameters
+{
+
+
+    public AEmptyParameters (
+    )
+    {
+    }
+
+    public override Object Clone()
+    {
+        return new AEmptyParameters (
+        );
+    }
+
+    public override void Apply(Switch sw)
+    {
+        ((Analysis) sw).CaseAEmptyParameters(this);
+    }
+
+
+    public override string ToString()
+    {
+        return ""
+        ;
+    }
+
+    internal override void RemoveChild(Node child)
+    {
+    }
+
+    internal override void ReplaceChild(Node oldChild, Node newChild)
+    {
     }
 
 }
